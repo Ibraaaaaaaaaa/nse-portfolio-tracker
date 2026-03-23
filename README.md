@@ -18,7 +18,8 @@ A real-time stock portfolio tracker for the Indian market (NSE), built in Python
 
 ## Screenshots
 
-> Add a screenshot of the web dashboard here
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/f721586f-9011-4fd4-b695-e209c47cf93a" />
+
 
 ---
 
@@ -37,7 +38,7 @@ A real-time stock portfolio tracker for the Indian market (NSE), built in Python
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/nse-portfolio-tracker.git
+git clone https://github.com/Ibraaaaaaaaaa/nse-portfolio-tracker.git
 cd nse-portfolio-tracker
 ```
 
