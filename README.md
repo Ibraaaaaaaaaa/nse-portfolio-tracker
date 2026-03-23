@@ -18,7 +18,8 @@ A real-time stock portfolio tracker for the Indian market (NSE), built in Python
 
 ## Screenshots
 
-<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/f721586f-9011-4fd4-b695-e209c47cf93a" />
+<img width="2380" height="1426" alt="Screenshot (64)" src="https://github.com/user-attachments/assets/5c1c481f-daec-4011-ab5e-2660423534c7" />
+
 
 
 ---
