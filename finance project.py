@@ -1,8 +1,10 @@
+#importing required modules
 import yfinance as yf
 import plotly.express as py
 from rich.console import Console
 from rich.table import Table
 
+#Pre-Determined set of stocks in a portfolio
 portfolio = [
 
     {"symbol": "RELIANCE", "quantity": 10, "buy_price_avg": 2400.00,"sector": "Energy"},
@@ -20,6 +22,7 @@ portfolio = [
     {"symbol": "ITC", "quantity": 40, "buy_price_avg": 430.00, "sector": "Consumer"}
 ]
 
+#Live Price of shares 
 def fetch_live_price():
     global price1
     for i in portfolio:
@@ -28,6 +31,7 @@ def fetch_live_price():
         price1 = round(ticker.fast_info['last_price'], 1)
         i["price"] = price1
 
+#Adding a new stock by user
 def add_stock(user_add, quantity1, cp, bp_new, sector):
 
     new_stock = {
@@ -47,6 +51,8 @@ def add_stock(user_add, quantity1, cp, bp_new, sector):
     port = f"Your new portfolio is: {portfolio}"
     return  f"Your stock {new_stock} was added successfully", port
 
+
+#Changing of price by user
 def price(stck, n_quantity, quantity, n_bp):
 
     if n_quantity == "y":
@@ -63,7 +69,7 @@ def price(stck, n_quantity, quantity, n_bp):
                 stock["buy_price_avg"] = n_bp
         return portfolio
 
-
+#Calculation of P/L of a stock
 def p_or_l(stck):
 
     for i in portfolio:
@@ -71,19 +77,19 @@ def p_or_l(stck):
             profit_or_loss = (i["price"] - i["buy_price_avg"]) * i["quantity"]
             return profit_or_loss
 
-
+#Deletion of stock
 def stock_del(stock):
     for i in portfolio:
         if i["symbol"] == stock:
             portfolio.remove(i)
-
+#Stock search
 def stock_search(stock):
 
     for i in portfolio:
         if i["symbol"] == stock:
             return i["symbol"], i["quantity"], i["buy_price_avg"], i["price"]
 
-
+#Best and Worst performing stocks
 def performance():
     lst = []
     for i in portfolio:
@@ -91,6 +97,7 @@ def performance():
         lst.append(profit_or_loss)
     return max(lst), min(lst)
 
+#Total Portfolio value
 def total_value():
 
     sum1 = 0
@@ -98,6 +105,7 @@ def total_value():
         sum1 += i["price"] * i["quantity"]
     return sum1
 
+#Price alerts
 def price_alert(p_alert, l_alert):
     alerts = []
     p_alert = p_alert/100
@@ -112,7 +120,7 @@ def price_alert(p_alert, l_alert):
             alerts.append("{i['symbol']}, Is Safe!!")
     return alerts
 
-
+#Graphs of P/L
 def show_pl_chart():
     symbols = []
     for i in portfolio:
@@ -129,7 +137,7 @@ def show_pl_chart():
     color_continuous_scale=["red", "green"])
     fig.show()
 
-
+#Sector wise arrangement
 def sector_allocation():
     global dict1
     dict1 = {}
@@ -140,7 +148,7 @@ def sector_allocation():
             dict1[i["sector"]] = i["quantity"] * i["price"]
 
 
-
+#Sector Pie Chart
 def show_sector_chart():
     sector_allocation()
     sectors = list(dict1.keys())
@@ -149,6 +157,7 @@ def show_sector_chart():
     fig = py.pie(names=sectors, values=sector_value)
     fig.show()
 
+#Menu/Dashboard
 def show_dashboard():
     p_or_l("MARUTI")
 
