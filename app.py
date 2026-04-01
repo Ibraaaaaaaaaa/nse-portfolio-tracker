@@ -3,7 +3,7 @@ import yfinance as yf
 import plotly.express as px
 import plotly.graph_objects as go
 
-# ── Page config ────────────────────────────────────────────────────────────────
+#Page config
 st.set_page_config(
     page_title="NSE Portfolio Tracker",
     page_icon="📈",
@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ── Custom CSS ─────────────────────────────────────────────────────────────────
+#Custom CSS
 
 st.markdown("""
 <style>
@@ -237,7 +237,7 @@ div[data-testid="stPlotlyChart"] {
 </style>
 """, unsafe_allow_html=True)
 
-# ── Portfolio Data ─────────────────────────────────────────────────────────────
+#Portfolio Data
 if "portfolio" not in st.session_state:
     st.session_state.portfolio = [
         {"symbol": "RELIANCE",   "quantity": 10, "buy_price_avg": 2400.00, "sector": "Energy"},
@@ -257,7 +257,7 @@ if "portfolio" not in st.session_state:
 
 portfolio = st.session_state.portfolio
 
-# ── Your Logic Functions ───────────────────────────────────────────────────────
+#Logic Functions
 def fetch_live_price():
     for i in portfolio:
         x = i["symbol"] + ".NS"
@@ -322,13 +322,13 @@ def sector_allocation():
         dict1[i["sector"]] = dict1.get(i["sector"], 0) + val
     return dict1
 
-# ── Fetch prices on load ───────────────────────────────────────────────────────
+#Fetch prices on load
 if "prices_loaded" not in st.session_state:
     with st.spinner("Fetching live prices from NSE..."):
         fetch_live_price()
     st.session_state.prices_loaded = True
 
-# ── Header ─────────────────────────────────────────────────────────────────────
+#Header
 col_title, col_refresh = st.columns([5, 1])
 with col_title:
     st.markdown("""
@@ -344,7 +344,7 @@ with col_refresh:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ── Top Metrics ────────────────────────────────────────────────────────────────
+#Top Metrics
 tv = total_value()
 total_invested = sum(i["buy_price_avg"] * i["quantity"] for i in portfolio)
 total_pl = tv - total_invested
@@ -383,7 +383,7 @@ with c4:
         <div class="metric-value red">{worst[0]}<br><span style="font-size:16px">₹{worst[1]:,.0f}</span></div>
     </div>""", unsafe_allow_html=True)
 
-# ── Portfolio Table ────────────────────────────────────────────────────────────
+#Portfolio Table
 st.markdown('<div class="section-header">Holdings</div>', unsafe_allow_html=True)
 
 rows = ""
@@ -416,7 +416,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Charts ─────────────────────────────────────────────────────────────────────
+#Charts
 st.markdown('<div class="section-header">Analytics</div>', unsafe_allow_html=True)
 chart_col1, chart_col2 = st.columns(2)
 
@@ -461,14 +461,14 @@ with chart_col2:
     )
     st.plotly_chart(fig_pie, use_container_width=True)
 
-# ── Sidebar ────────────────────────────────────────────────────────────────────
+#Sidebar
 with st.sidebar:
     st.markdown("""
     <div style="font-size:18px; font-weight:800; letter-spacing:-0.5px; margin-bottom:4px;">Controls</div>
     <div style="font-size:10px; letter-spacing:2px; color:#6b6b8a; font-family:'JetBrains Mono',monospace; margin-bottom:24px;">MANAGE PORTFOLIO</div>
     """, unsafe_allow_html=True)
 
-    # Add Stock
+    #Add Stock
     if st.checkbox("Add Stock"):
         sym = st.text_input("Symbol (e.g. TATAMOTORS)", key="add_sym").upper()
         qty = st.number_input("Quantity", min_value=1, value=1, key="add_qty")
@@ -481,7 +481,7 @@ with st.sidebar:
                 st.success(msg)
                 st.rerun()
 
-    # Delete Stock
+    #Delete Stock
     if st.checkbox("Delete Stock"):
         symbols_list = [i["symbol"] for i in portfolio]
         del_sym = st.selectbox("Select stock to delete", symbols_list, key="del_sym")
@@ -490,7 +490,7 @@ with st.sidebar:
                 st.success(f"{del_sym} removed.")
                 st.rerun()
 
-    # Price Alert
+    #Price Alert
     if st.checkbox("Price Alerts"):
         p_thresh = st.slider("Profit Alert (%)", 1, 100, 15)
         l_thresh = st.slider("Loss Alert (%)", 1, 100, 10)
@@ -504,7 +504,7 @@ with st.sidebar:
                 else:
                     st.markdown(f'<div class="alert-safe">{msg}</div>', unsafe_allow_html=True)
 
-    # Stock Search
+    #Stock Search
     if st.checkbox("Search Stock"):
         search_sym = st.selectbox("Select stock", [i["symbol"] for i in portfolio], key="search_sym")
         if st.button("Search"):
